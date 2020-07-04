@@ -1,0 +1,1 @@
+window.dropbox = new DropBoxController;
