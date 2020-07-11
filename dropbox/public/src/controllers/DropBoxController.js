@@ -407,6 +407,51 @@ class DropBoxController {
 
         li.addEventListener('click', event => {
 
+            if (event.shiftKey) {
+
+                let firstLi = this.listFilesEl.querySelector('.selected');
+
+                if (firstLi) {
+
+                    let indexStart;
+                    let indexEnd;
+                    let lisEl = li.parentElement.childNodes;
+
+                    lisEl.forEach((element, index) => {
+
+                        if (firstLi === element) indexStart = index;
+                        if (li === element) indexEnd = index;
+
+                    });
+
+                    let indexArray = [indexStart, indexEnd].sort();
+
+                    lisEl.forEach((element, index) => {
+
+                        if (index >= indexArray[0] && index <= indexArray[1]) {
+
+                            element.classList.add('selected');
+
+                        }
+
+                    });
+
+                    return true;
+
+                }
+
+            }
+
+            if (!event.ctrlKey) {
+
+                this.listFilesEl.querySelectorAll('li.selected').forEach(element => {
+
+                    element.classList.remove('selected');
+
+                });
+
+            }
+
             li.classList.toggle('selected');
 
         });
