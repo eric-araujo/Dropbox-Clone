@@ -16,7 +16,7 @@ class DropBoxController {
 
     }
 
-    connectFirebase(){
+    connectFirebase() {
 
         var firebaseConfig = {
             apiKey: "AIzaSyAe4iDxPlcTn2oQi8ZcoLa6RxFttSXClPg",
@@ -67,7 +67,7 @@ class DropBoxController {
 
     }
 
-    uploadComplete(){
+    uploadComplete() {
 
         this.modalShow(false);
         this.inputFileEl.value = '';
@@ -75,7 +75,7 @@ class DropBoxController {
 
     }
 
-    getFirebaseRef(){
+    getFirebaseRef() {
 
         return firebase.database().ref('files');
 
@@ -86,7 +86,7 @@ class DropBoxController {
         this.snackModalEl.style.display = (show) ? 'block' : 'none';
 
     }
-    
+
     uploadTask(files) {
 
         let promises = [];
@@ -184,9 +184,9 @@ class DropBoxController {
 
     }
 
-    getFileIconView(file){
+    getFileIconView(file) {
 
-        switch(file.type) {
+        switch (file.type) {
 
             case 'folder':
                 return `
@@ -198,7 +198,7 @@ class DropBoxController {
                     </g>
                 </svg>
             `;
-            break;
+                break;
 
             case 'video/mp4':
             case 'video/quicktime':
@@ -249,7 +249,7 @@ class DropBoxController {
                     <div class="name text-center">Music</div>
                 </li>
                 `;
-            break;
+                break;
 
             case 'application/pdf':
                 return `
@@ -289,7 +289,7 @@ class DropBoxController {
                         <div class="name text-center">PDF</div>
                     </li>
                 `;
-            break;
+                break;
 
             case 'image/jpge':
             case 'image/jpg':
@@ -338,7 +338,7 @@ class DropBoxController {
                         <div class="name text-center">Imagem</div>
                     </li>
                 `;
-            break;
+                break;
 
             default:
                 return `
@@ -368,7 +368,7 @@ class DropBoxController {
     }
 
     getFileView(key, file) {
-        
+
         let li = document.createElement('li');
 
         li.dataset.key = key;
@@ -378,11 +378,13 @@ class DropBoxController {
             <div class="name text-center">${file.name}</div>
         `;
 
+        this.initEventsLi(li);
+
         return li;
 
     }
 
-    readFiles(){
+    readFiles() {
 
         this.getFirebaseRef().on('value', snapshot => {
 
@@ -396,6 +398,16 @@ class DropBoxController {
                 this.listFilesEl.appendChild(this.getFileView(key, data));
 
             });
+
+        });
+
+    }
+
+    initEventsLi(li) {
+
+        li.addEventListener('click', event => {
+
+            li.classList.toggle('selected');
 
         });
 
